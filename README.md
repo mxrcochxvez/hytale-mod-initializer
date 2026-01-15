@@ -1,14 +1,8 @@
 # Hytale Mod Initializer
 
-VS Code extension that scaffolds a Hytale mod from the HytaleModding plugin template with guided prompts.
-
-## Install the extension
-- Build/package (repo clone): `npm install` then `npm run package` (creates `dist/hytale-mod-initializer.vsix`).
-- Install locally: Command Palette → **Extensions: Install from VSIX…** → select `dist/hytale-mod-initializer.vsix` (or CLI: `code --install-extension dist/hytale-mod-initializer.vsix --force`).
-
 ## Run the initializer
 1) Open the folder where you want the mod generated (or choose a target folder when prompted).
-2) Command Palette → **Initialize Hytale Mod**.
+2) Command Palette (ctrl + shift + P / CMD + shift + P) → **Initialize Hytale Mod**.
 3) Fill the prompts:
    - **Group ID (org)** (e.g., `dev.example`)
    - **Mod name** (artifactId)
