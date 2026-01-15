@@ -15,40 +15,54 @@ async function fetchToFile(
   redirectsLeft: number
 ): Promise<void> {
   await new Promise<void>((resolve, reject) => {
-    const request = https.get(url, (response) => {
-      const status = response.statusCode ?? 0;
-      const location = response.headers?.location;
+    const request = https.get(
+      url,
+      {
+        headers: {
+          "user-agent": "hytale-mod-initializer/0.0.1",
+          accept: "application/zip,application/octet-stream"
+        }
+      },
+      (response) => {
+        const status = response.statusCode ?? 0;
+        const location = response.headers?.location;
 
-      if ([301, 302, 303, 307, 308].includes(status) && location) {
-        if (redirectsLeft <= 0) {
+        if (status >= 300 && status < 400) {
+          if (location) {
+            if (redirectsLeft <= 0) {
+              response.resume();
+              reject(new Error("Too many redirects when downloading template"));
+              return;
+            }
+            response.resume();
+            const nextUrl = new URL(location, url).toString();
+            fetchToFile(nextUrl, zipPath, redirectsLeft - 1)
+              .then(resolve)
+              .catch(reject);
+            return;
+          }
           response.resume();
-          reject(new Error("Too many redirects when downloading template"));
+          reject(new Error(`Failed to download template (status ${status}, missing Location header)`));
           return;
         }
-        response.resume();
-        const nextUrl = new URL(location, url).toString();
-        fetchToFile(nextUrl, zipPath, redirectsLeft - 1)
-          .then(resolve)
-          .catch(reject);
-        return;
+
+        if (status !== 200 || !response.headers) {
+          reject(new Error(`Failed to download template (status ${status})`));
+          response.resume();
+          return;
+        }
+
+        const fileStream = fsSync.createWriteStream(zipPath);
+        response.pipe(fileStream);
+
+        fileStream.on("finish", () => {
+          fileStream.close();
+          resolve();
+        });
+
+        fileStream.on("error", reject);
       }
-
-      if (status !== 200 || !response.headers) {
-        reject(new Error(`Failed to download template (status ${status})`));
-        response.resume();
-        return;
-      }
-
-      const fileStream = fsSync.createWriteStream(zipPath);
-      response.pipe(fileStream);
-
-      fileStream.on("finish", () => {
-        fileStream.close();
-        resolve();
-      });
-
-      fileStream.on("error", reject);
-    });
+    );
 
     request.on("error", reject);
   });
