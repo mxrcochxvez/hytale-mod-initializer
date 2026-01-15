@@ -1,10 +1,10 @@
 {
   "name": "hytale-mod-initializer",
   "displayName": "Hytale Mod Initializer",
-  "publisher": "Marco Chavez",
+  "publisher": "marcochavez",
   "description": "Scaffold a Hytale mod from the plugin template with guided prompts.",
-  "version": "0.0.2",
-  "icon": "images/icon.svg",
+  "version": "1.0.0",
+  "icon": "images/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/mxrcochxvez/hytale-mod-initializer"

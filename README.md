@@ -25,4 +25,4 @@
 See `docs/distribute.md` for Marketplace publishing steps, versioning, and VSIX distribution notes.
 
 ## Icon
-The extension icon is `images/icon.svg`. Replace it with your own (square SVG/PNG) and keep the `"icon": "images/icon.svg"` entry in `package.json`.
+The extension icon is `images/icon.png` (placeholder). Replace it with your own (square PNG) and keep the `"icon": "images/icon.png"` entry in `package.json`.

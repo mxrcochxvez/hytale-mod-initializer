@@ -9,7 +9,7 @@ This guide is for you, the extension author, to ship the extension to users via 
 - Marketplace publisher ID (no spaces) and PAT with publish scope
 
 ## Prepare metadata
-- In `package.json`: set `publisher`, `name`, `displayName`, `description`, `repository`, `license`, and `icon` (points to `images/icon.svg`).
+- In `package.json`: set `publisher`, `name`, `displayName`, `description`, `repository`, `license`, and `icon` (points to `images/icon.png`).
 - Bump `version` before each publish (or let `vsce publish patch|minor|major` bump it).
 
 ## Build and package
@@ -38,7 +38,7 @@ npm run package   # builds and produces dist/hytale-mod-initializer.vsix
 - `npm run package` succeeds
 - Version bumped
 - Publisher set correctly
-- Icon present at `images/icon.svg`
+- Icon present at `images/icon.png`
 - Optional: install the fresh VSIX locally to sanity check the command works
 
 ## Notes

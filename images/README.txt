@@ -1,1 +1,1 @@
-Place your extension icon here (SVG or square PNG). A sample `icon.svg` is provided; replace it with your own if desired.
+Place your extension icon here as a square PNG. A sample `icon.png` is provided; replace it with your own if desired.
