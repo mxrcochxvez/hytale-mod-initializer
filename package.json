@@ -1,0 +1,44 @@
+{
+  "name": "hytale-mod-initializer",
+  "displayName": "Hytale Mod Initializer",
+  "publisher": "Marco Chavez",
+  "description": "Scaffold a Hytale mod from the plugin template with guided prompts.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mxrcochxvez/hytale-mod-initializer"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:hytaleModInitializer.initialize"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "hytaleModInitializer.initialize",
+        "title": "Initialize Hytale Mod"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npm run compile && npx vsce package --out dist/hytale-mod-initializer.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/unzipper": "^0.10.11",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.5",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "unzipper": "^0.10.11"
+  }
+}
