@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
-import { scaffoldHytaleMod } from "./scaffolder";
+import { runInitializeCommand } from "./commands/initialize";
 
 export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(
     "hytaleModInitializer.initialize",
-    () => scaffoldHytaleMod()
+    () => runInitializeCommand()
   );
 
   context.subscriptions.push(disposable);

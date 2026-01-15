@@ -30,7 +30,8 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "package": "npm run compile && npx vsce package --out dist/hytale-mod-initializer.vsix"
+    "prepackage": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\"",
+    "package": "npm run compile && npx vsce package --out ./dist/hytale-mod-initializer.vsix"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
