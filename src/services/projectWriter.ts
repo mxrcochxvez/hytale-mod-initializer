@@ -12,8 +12,7 @@ export async function applyTemplate(inputs: ScaffoldInputs): Promise<void> {
   );
 
   await fs.mkdir(path.dirname(newPackagePath), { recursive: true });
-  await fs.rename(oldPackagePath, newPackagePath);
-  await cleanupEmptyParents(oldPackagePath, javaRoot);
+  await movePackageDir(oldPackagePath, newPackagePath, javaRoot);
 
   const commandClassName = `${inputs.mainClassName}Command`;
   const eventClassName = `${inputs.mainClassName}Event`;
@@ -121,4 +120,32 @@ async function cleanupEmptyParents(
       break;
     }
   }
+}
+
+async function movePackageDir(
+  oldPackagePath: string,
+  newPackagePath: string,
+  javaRoot: string
+): Promise<void> {
+  const resolvedOld = path.resolve(oldPackagePath);
+  const resolvedNew = path.resolve(newPackagePath);
+
+  if (resolvedOld === resolvedNew) {
+    return;
+  }
+
+  const isSubdir = resolvedNew.startsWith(resolvedOld + path.sep);
+
+  if (isSubdir) {
+    const tempPath = path.join(javaRoot, "__package_tmp_move");
+    await fs.rm(tempPath, { recursive: true, force: true });
+    await fs.rename(oldPackagePath, tempPath);
+    await fs.mkdir(path.dirname(newPackagePath), { recursive: true });
+    await fs.rename(tempPath, newPackagePath);
+    await cleanupEmptyParents(tempPath, javaRoot);
+  } else {
+    await fs.rename(oldPackagePath, newPackagePath);
+  }
+
+  await cleanupEmptyParents(oldPackagePath, javaRoot);
 }
