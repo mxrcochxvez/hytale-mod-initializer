@@ -2,43 +2,33 @@
 
 VS Code extension that scaffolds a Hytale mod from the HytaleModding plugin template with guided prompts.
 
-## Prerequisites
-- VS Code 1.90+ installed
-- Node.js and npm installed
-- `vsce` available via `npx vsce ...`
-- A VS Code Marketplace publisher ID (no spaces) and a Personal Access Token (PAT) with Marketplace publish scope
+## Install the extension
+- Build/package (repo clone): `npm install` then `npm run package` (creates `dist/hytale-mod-initializer.vsix`).
+- Install locally: Command Palette → **Extensions: Install from VSIX…** → select `dist/hytale-mod-initializer.vsix` (or CLI: `code --install-extension dist/hytale-mod-initializer.vsix --force`).
 
-## Local build vs. package
-- **Build only**: `npm run compile` (TypeScript → `out/`)
-- **Package for install/distribution**: `npm run package` (builds and creates `dist/hytale-mod-initializer.vsix`)
+## Run the initializer
+1) Open the folder where you want the mod generated (or choose a target folder when prompted).
+2) Command Palette → **Initialize Hytale Mod**.
+3) Fill the prompts:
+   - **Group ID (org)** (e.g., `dev.example`)
+   - **Mod name** (artifactId)
+   - **Java package name** (defaults to `groupId.modname`)
+   - **Main class name**
+   - **Author name / email / URL** (optional email/URL)
+   - **Description**
+4) Wait for the download/extract/apply steps to finish; you’ll see a success notification with the target path.
 
-## Install locally from VSIX
-- Command Palette → **Extensions: Install from VSIX…** → select `dist/hytale-mod-initializer.vsix`
-- Or CLI: `code --install-extension dist/hytale-mod-initializer.vsix --force`
+## What it generates
+- Downloads the Hytale plugin template, extracts it, and rewrites package paths, class names, pom.xml, and manifest.json based on your inputs.
+- Produces a ready-to-build Java plugin project in the selected target folder.
 
-## Publish to the VS Code Marketplace
-1) **Set publisher in `package.json`**
-   - Replace `publisher` with your Marketplace publisher ID (no spaces).
-2) **Login to the publisher** (one-time per machine)
-   ```bash
-   npx vsce login <publisher>
-   # paste your Marketplace PAT when prompted
-   ```
-3) **Publish**
-   - Patch release: `npx vsce publish patch`
-   - Minor release: `npx vsce publish minor`
-   - Major release: `npx vsce publish major`
-   - Or publish current version: `npx vsce publish`
+## Troubleshooting
+- If download fails: ensure internet access; the template URL is `https://codeload.github.com/HytaleModding/plugin-template/zip/refs/heads/main`.
+- If the command is missing: reinstall the VSIX and reload VS Code.
+- If rename errors occur on Windows paths: ensure the target folder is empty or new; then rerun.
 
-> Tip: `vsce` will auto-increment the version if you use `patch|minor|major`. If you publish with `npx vsce publish` directly, bump `version` in `package.json` first.
+## Author/publishing docs
+See `docs/distribute.md` for Marketplace publishing steps, versioning, and VSIX distribution notes.
 
-## Release checklist
-- `npm install`
-- `npm run package` (ensure it succeeds)
-- Confirm `publisher`, `name`, `displayName`, `description`, `license`, `repository` in `package.json`
-- Optionally validate by installing the freshly built VSIX locally before publishing
-
-## Notes
-- The extension downloads the upstream template at runtime; it doesn’t bundle the template code. Users remain subject to the template repository’s terms.
-- `dist/` is ignored in git; the VSIX is for installation/distribution only.
-- Add an icon by placing `images/icon.png` (square PNG, ~128x128) and keep the `"icon": "images/icon.png"` entry in `package.json`.
+## Icon
+The extension icon is `images/icon.svg`. Replace it with your own (square SVG/PNG) and keep the `"icon": "images/icon.svg"` entry in `package.json`.

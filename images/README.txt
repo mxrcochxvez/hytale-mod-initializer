@@ -1,1 +1,1 @@
-Place your extension icon here as a square PNG (recommended 128x128 or larger, small file size). Example: icon.png
+Place your extension icon here (SVG or square PNG). A sample `icon.svg` is provided; replace it with your own if desired.
